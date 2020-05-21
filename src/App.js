@@ -11,6 +11,7 @@ class App extends React.Component{
     this.state={
       cartas
     }
+    this.agregarCarta=this.agregarCarta.bind(this);
     
   }
   tirarCarta(id){
@@ -19,6 +20,12 @@ class App extends React.Component{
         return i!==id
       })
     });
+  }
+  
+  agregarCarta(carta){
+    this.setState({
+      cartas:[...this.state.cartas,carta]
+    })
   }
   
   render(){
@@ -52,7 +59,7 @@ class App extends React.Component{
         </a>
         
       </nav>
-      <FormularioCarta/>
+      <FormularioCarta onAgregarCarta={this.agregarCarta}/>
     
       
       <div>

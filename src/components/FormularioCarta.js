@@ -24,11 +24,17 @@ class FormularioCarta extends Component{
         });
     }
     
+    handleSubmit=(e)=>{
+        e.preventDefault();
+        this.props.onAgregarCarta(this.state);
+        console.log(this.state);
+    }
+    
     render(){
         console.log(this.state)
         return (
             <div className="card">
-                <form className="card-body" >
+                <form className="card-body" onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <select onChange={this.handleInput} name="mazo" className="form-control">
                             <option>Corazones</option>
