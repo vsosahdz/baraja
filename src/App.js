@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {cartas} from './cartas.json'
+import axios from 'axios';
 import FormularioCarta from './components/FormularioCarta';
 
 
@@ -9,7 +10,7 @@ class App extends React.Component{
   constructor(){
     super();
     this.state={
-      cartas
+      cartas:[]
     }
     this.agregarCarta=this.agregarCarta.bind(this);
     
@@ -20,12 +21,36 @@ class App extends React.Component{
         return i!==id
       })
     });
+    //Comunique con el servidor
+    fetch("http://3.23.105.105:8081/carta",{
+      method:'POST',
+      body:JSON.stringify({
+        titulo:id,
+        mensaje: "Hola Post"
+      }),
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
   }
   
   agregarCarta(carta){
     this.setState({
       cartas:[...this.state.cartas,carta]
     })
+  }
+  
+  componentDidMount(){
+    /*fetch("http://3.23.105.105:8081/cartas")
+    .then(res=>res.json())
+    .then(resData=>{
+      this.setState(resData);
+    })*/
+    axios
+     .get("http://3.23.105.105:8081/cartas")
+     .then(result=>{
+       this.setState(result.data);
+     })
   }
   
   render(){
